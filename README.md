@@ -11,15 +11,25 @@ All of your commits must be here, we want to see how you work.
 ## The assignment
 ![](https://api.chucknorris.io/img/chucknorris_logo_coloured_small.png)
 
-The applicant should design and implement a minimalistic flask API application that would let the user search, create, delete and update jokes from [Chuck Norris jokes](https://api.chucknorris.io/), that works through for example Postman.
+The applicant should design and implement a minimalistic flask API application that would let the user search, create, delete and update jokes from [Chuck Norris jokes](https://api.chucknorris.io/), that works through for example Postman. To simplify the description, we will call [Chuck Norris jokes](https://api.chucknorris.io/) as remote and application implemented in this assignment as local.
 
-We expect the applicant to at least implement these endpoints (but feel free to add more):
+We expect the applicant to at least implement these 5 endpoints (but feel free to add more):
 
-- GET /api/jokes/
-- POST /api/jokes/
-- GET /api/jokes/id
-- PUT /api/jokes/id
-- DELETE /api/jokes/id
+### `GET /jokes/?query={query}`
+Free text search endpoint. You should take local and remote search results into consideration.
+
+### `POST /api/jokes/`
+Endpoint to create joke locally.
+
+### `GET /api/jokes/{id}`
+Endpoint to retrieve a joke by unique id. You should take local and remote results into consideration.
+
+### `PUT /api/jokes/{id}`
+Endpoint to update a joke by unique id. If the joke does not exist, return 404 not found. But if it does, store a updated version locally. Any subsequent reads should only see this updated version.
+
+### `DELETE /api/jokes/{id}`
+Endpoint to delete a joke by unique id. If the joke does not exist, return 404 not found. But if it does, mark the joke locally as deleted. Any subsequent reads should *NOT* see this joke.
+
 
 ## Technical assumptions
 
