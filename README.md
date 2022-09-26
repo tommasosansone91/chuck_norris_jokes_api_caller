@@ -41,15 +41,16 @@ Endpoint to delete a joke by unique id. If the joke does not exist, return 404 n
 Focus on the basics and on solving the main problem, but you can also:
 
 - Add documentation
-- Add unit tests
 - Add extra options/attributes to endpoints to make them more powerful
+- Add a Dockerfile to make your assignment deployable.
+- Add a travis/gitlab/... CI/CD configuration steps.
 
 ## What are we evaluating?
 
 1. The described features and requirements.
 2. Any extras you've added to your final solution.
 3. Any other creative thing or feature you added by yourself.
-4. In general: simplicity, clarity of your solution, architecture, documentation, code style, interface design, and the code.
+4. In general: simplicity, clarity of your solution, architecture, documentation, code style, tests, interface design, and the code.
 
 ## Tips
 
