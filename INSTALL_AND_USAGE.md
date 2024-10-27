@@ -19,7 +19,8 @@ export the app script path as bash variable
 
     export FLASK_APP=chuck_norris_jokes_caller/app.py
 
-initialize the db migration gear, it will create a folder at path `migrations`
+initialize the db migration gear, it will create a folder at path `migrations`.<br>
+You should ignore the error in case a folder `migrations` is already present/versioned in the project.
 
     flask db init  # create migration required files
 
