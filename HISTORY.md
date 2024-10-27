@@ -39,6 +39,17 @@ visit
 
 extend the app to fill out templates.
 
-dvelope some test api
+develop some test data
+
+develop db schema, tables
+
+populate the db with test data
+
+develop, test queries
+
+setup migration gear
+
+develop db population script
+
 
     
