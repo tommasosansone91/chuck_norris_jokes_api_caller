@@ -48,16 +48,15 @@ with app.app_context():
 
     try:
 
-        joke_version_1_2_content = """ V2 At various times during the making of."""
+        joke_version_2_1_content = """ V2 At various times during the making of."""
 
-        joke_version_1_2 = JokeVersion(
+        joke_version_2_1 = JokeVersion(
             id=2,
             joke_id=1,
-            content=joke_version_1_2_content
+            content=joke_version_2_1_content
         )
 
-        db.session.add(joke_1)
-        db.session.add(joke_version_1_1)
+        db.session.add(joke_version_2_1)
         db.session.commit()
 
     except SQLAlchemyError as e:
@@ -74,16 +73,16 @@ with app.app_context():
         #----
 
 
-        joke_version_2_1_content = """as a kid Chuck Norris carried out over 11 sucsessful scuicide bombing missions for the u.s. millitary... the most well known was his attack hiroshima"""
+        joke_version_3_2_content = """as a kid Chuck Norris carried out over 11 sucsessful scuicide bombing missions for the u.s. millitary... the most well known was his attack hiroshima"""
 
-        joke_version_2_1 = JokeVersion(
+        joke_version_3_2 = JokeVersion(
             id=3,
             joke_id=2,
-            content=joke_version_2_1_content
+            content=joke_version_3_2_content
         )
 
         db.session.add(joke_2)
-        db.session.add(joke_version_2_1)
+        db.session.add(joke_version_3_2)
         db.session.commit()
 
     except SQLAlchemyError as e:
@@ -95,16 +94,16 @@ with app.app_context():
 
 
     try:
-        joke_version_2_2_content = """ v2 as a kid Chuck Norris carried out over 11 sucsessful """
+        joke_version_4_2_content = """ v2 as a kid Chuck Norris carried out over 11 sucsessful """
 
-        joke_version_2_2 = JokeVersion(
+        joke_version_4_2 = JokeVersion(
             id=4,
             joke_id=2,
-            content=joke_version_2_2_content
+            content=joke_version_4_2_content
         )
 
         db.session.add(joke_2)
-        db.session.add(joke_version_2_2)
+        db.session.add(joke_version_4_2)
         db.session.commit()
 
     except SQLAlchemyError as e:
@@ -121,16 +120,16 @@ with app.app_context():
 
         #---
 
-        joke_version_3_1_content = """Many a class 5 Oklahoma tornado were started when Chuck Norris was preparing to lasso a steer."""
+        joke_version_5_3_content = """Many a class 5 Oklahoma tornado were started when Chuck Norris was preparing to lasso a steer."""
 
-        joke_version_3_1 = JokeVersion(
+        joke_version_5_3 = JokeVersion(
             id=5,
             joke_id=3,
-            content=joke_version_3_1_content
+            content=joke_version_5_3_content
         )
 
         db.session.add(joke_3)
-        db.session.add(joke_version_3_1)
+        db.session.add(joke_version_5_3)
         db.session.commit()
 
     except SQLAlchemyError as e:
@@ -168,8 +167,8 @@ with app.app_context():
 
     # created_objects_list = [
     #     joke_1, joke_version_1_1,
-    #     joke_2, joke_version_2_1,
-    #     joke_3, joke_version_3_1
+    #     joke_2, joke_version_3_2,
+    #     joke_3, joke_version_5_3
     # ]
 
     # db.session.add_all(created_objects_list)
