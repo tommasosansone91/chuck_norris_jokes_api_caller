@@ -37,7 +37,25 @@ def helloname():
     name = request.args.get('name', 'You')
     # http://127.0.0.1:5000/helloname/?name=mario
     return f'<h1>Welcome on Chuck Norris Jokes app, {name}!</h1>' 
-    
+
+
+
+class Joke(db.Model):
+
+    __tablename__ = 'joke'
+
+    id = db.Column(db.Integer,primary_key=True)
+    is_active = db.Column(db.Boolean, default=True)
+
+    def __init__(self, is_active):
+        self.is_active = is_active
+
+    def __repr__(self):
+
+        return f"Joke n.{self.id} (is active: {self.is_active})"
+
+
+
 
 if __name__ == "__main__":
     app.run()
