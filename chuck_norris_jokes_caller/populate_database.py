@@ -8,6 +8,8 @@ from app import app
 
 from sqlalchemy.exc import SQLAlchemyError
 
+from time import sleep
+
 
 print(" ")
 
@@ -18,7 +20,7 @@ with app.app_context():
 
 
     # add test data
-    #-------------------
+    ##################
 
     try:
         joke_1 =  Joke(1)
@@ -45,6 +47,7 @@ with app.app_context():
         print(f"An unexpected error occurred: \n{e}\n")
 
 
+    sleep(1)
 
     try:
 
@@ -66,6 +69,8 @@ with app.app_context():
     except Exception as e:
         print(f"An unexpected error occurred: \n{e}\n")
 
+
+    sleep(1)
 
     try:
         joke_2 =  Joke(2)
@@ -93,6 +98,8 @@ with app.app_context():
         print(f"An unexpected error occurred: \n{e}\n")
 
 
+    sleep(1)
+
     try:
         joke_version_4_2_content = """ v2 as a kid Chuck Norris carried out over 11 sucsessful """
 
@@ -113,6 +120,7 @@ with app.app_context():
         print(f"An unexpected error occurred: \n{e}\n")
 
 
+    sleep(1)
 
     try:
         joke_3 =  Joke(3)
@@ -139,8 +147,7 @@ with app.app_context():
         print(f"An unexpected error occurred: \n{e}\n")
 
 
-
-
+    sleep(1)
 
     try:
         joke_version_3_2_content = """ v2 Many a class 5 Oklahoma tornado were started """
@@ -172,3 +179,7 @@ with app.app_context():
     # db.session.add_all(created_objects_list)
 
     # db.session.commit()
+
+
+    # test model methods
+    ##########################
