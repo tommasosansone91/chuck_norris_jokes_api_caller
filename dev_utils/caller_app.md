@@ -1,6 +1,6 @@
-# local app
+# caller app
 
-chucknorrisjokeslocal
+chuck_norris_jokes_caller
 
 works via postman, no forms.
 
