@@ -102,7 +102,6 @@ with app.app_context():
             content=joke_version_4_2_content
         )
 
-        db.session.add(joke_2)
         db.session.add(joke_version_4_2)
         db.session.commit()
 
@@ -152,7 +151,6 @@ with app.app_context():
             content=joke_version_3_2_content
         )
 
-        db.session.add(joke_3)
         db.session.add(joke_version_3_2)
         db.session.commit()
 
