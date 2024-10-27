@@ -42,7 +42,7 @@ every time the DB structure is changed you have to run
 
 ### populate db with test data
 
-    python chuck_norris_jokes_caller/setupdatabase.py
+    python chuck_norris_jokes_caller/populate_database.py
 
 In case you need to manipulate db data via SQL
 
