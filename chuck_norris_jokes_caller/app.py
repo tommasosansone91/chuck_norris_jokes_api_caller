@@ -10,6 +10,8 @@ from flask_migrate import Migrate
 
 from sqlalchemy import func
 
+import sqlite3
+
 from db_queries import \
     GET_JOKES_BY_FREE_TEXT
 
@@ -17,23 +19,18 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
 
+sqlite_db_path = os.path.join(basedir, 'chuck_norris_jokes_caller.sqlite')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'chuck_norris_jokes_caller.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + sqlite_db_path
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 Migrate(app,db)
  
 
-
 @app.route("/")
 def index():
     return render_template("index.html")
-
-
-@app.route('/hello')
-def hello():
-    return '<h1>Welcome on Chuck Norris Jokes app!</h1>'
     
 
 @app.route('/helloname/')
@@ -43,6 +40,31 @@ def helloname():
     return f'<h1>Welcome on Chuck Norris Jokes app, {name}!</h1>' 
 
 
+### `GET /jokes/?query={query}`
+# Free text search endpoint. You should take local and remote search results into consideration.
+@app.route('/jokes/')
+def get_jokes_by_free_text():
+
+    # http://127.0.0.1:5000/jokes/?query=cigars
+
+    free_text = request.args.get('query', 'NO_TEXT')
+
+    compiled_query = GET_JOKES_BY_FREE_TEXT.format(free_text)
+
+    conn = sqlite3.connect(sqlite_db_path)
+    curs = conn.cursor()
+
+    # print(free_text)
+    # print(compiled_query)
+
+    curs.execute(compiled_query)
+    jokes = curs.fetchall()
+
+    conn.close()
+
+    return jokes
+    
+    
 
 class Joke(db.Model):
 
