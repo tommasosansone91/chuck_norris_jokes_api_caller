@@ -94,6 +94,48 @@ class JokeVersion(db.Model):
 
         return f"Version n.{self.id} of Joke n.{self.joke_id}"
 
+
+    # @classmethod
+    # # this is to tell that this method is not of my instance, but of my class
+    # def get_most_recent_joke_version_by_joke_id(this_class, joke_id):
+        
+    #     result = (
+    #         this_class.query
+    #         .filter_by(joke_id=joke_id)
+    #         .order_by(this_class.creation_timestamp.desc())
+    #         .first()
+    #     )
+    
+    #     return result
+    
+    # # most_recent_joke_version_for_joke_n34 = JokeVersion.get_most_recent_joke_version_by_joke_id(34)
+
+
+    # @classmethod
+    # def get_most_recent_joke_version_listfor_each_joke_id(this_class):
+
+    #     # get_most_recent_joke_version_by_joke_id in another way
+    #     subquery = (
+    #         db.session.query(
+    #             this_class.joke_id,
+    #             func.max(this_class.creation_timestamp).label('max_creation_timestamp')
+    #         )
+    #         .group_by(this_class.joke_id)
+    #         .subquery()
+    #     )
+
+
+    #     latest_versions = (
+    #         db.session.query(this_class)
+    #         .join(
+    #             subquery,
+    #             (this_class.joke_id == subquery.c.joke_id) & 
+    #             (this_class.creation_timestamp == subquery.c.max_creation_timestamp)
+    #         )
+    #         .all()
+    #     )
+        
+    #     return latest_versions
     
 
 if __name__ == "__main__":
