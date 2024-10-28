@@ -55,3 +55,8 @@ In case you need to manipulate db data via SQL
 
 >[!WARNING]
 > do not add `--debug` in production!
+
+
+### Enjoy!
+
+Import in your Postman application the json collections stored in folder `dev_utils/postman_collections`, then test and have fun with the app.
