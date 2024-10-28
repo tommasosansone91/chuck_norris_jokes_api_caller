@@ -11,6 +11,8 @@ from flask_migrate import Migrate
 from sqlalchemy import func
 
 import sqlite3
+import requests
+import json
 
 from db_queries import \
     GET_JOKES_BY_FREE_TEXT
@@ -45,6 +47,9 @@ def helloname():
 @app.route('/jokes/')
 def get_jokes_by_free_text():
 
+    # caller app jokes
+    #-----------------
+
     # http://127.0.0.1:5000/jokes/?query=cigars
 
     free_text = request.args.get('query', 'NO_TEXT')
@@ -58,9 +63,27 @@ def get_jokes_by_free_text():
     # print(compiled_query)
 
     curs.execute(compiled_query)
-    jokes = curs.fetchall()
+    caller_app_jokes = curs.fetchall()
 
     conn.close()
+
+    # remote app jokes
+    #-----------------
+
+    remote_app_api_url = "https://api.chucknorris.io/jokes/search?query={}".format(free_text)
+
+    remote_app_response = requests.get(remote_app_api_url)
+    remote_app_response_data = remote_app_response.json()
+
+    remote_app_jokes = remote_app_response_data
+
+    # unite jokes
+    #-----------------
+
+    jokes = {
+        "caller_app_jokes": caller_app_jokes,
+        "remote_app_jokes": remote_app_jokes
+    }
 
     return jokes
     
