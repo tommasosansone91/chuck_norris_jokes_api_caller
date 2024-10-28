@@ -16,7 +16,8 @@ import requests
 import json
 
 from db_queries import \
-    GET_JOKES_BY_FREE_TEXT
+    GET_JOKES_BY_FREE_TEXT, \
+    GET_JOKE_BY_JOKE_ID
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -55,15 +56,14 @@ def get_jokes_by_free_text():
 
     free_text = request.args.get('query', 'NO_TEXT')
 
-    compiled_query = GET_JOKES_BY_FREE_TEXT.format(free_text)
+    free_text_lowered_and_wrapped_with_jollychars = f"%{free_text.lower()}%"
 
     conn = sqlite3.connect(sqlite_db_path)
     curs = conn.cursor()
 
     # print(free_text)
-    # print(compiled_query)
 
-    curs.execute(compiled_query)
+    curs.execute(GET_JOKES_BY_FREE_TEXT, (free_text_lowered_and_wrapped_with_jollychars,))
     query_results = curs.fetchall()
 
     conn.close()
@@ -104,7 +104,63 @@ def get_jokes_by_free_text():
 
     return jokes
     
-    
+
+# ### `GET /api/jokes/{id}`
+# Endpoint to retrieve a joke by unique id. You should take local and remote results into consideration.
+@app.route('/api/jokes/<string:joke_id>', methods=['GET'])
+def get_jokes_by_id(joke_id):
+
+    # caller app jokes
+    #-----------------
+
+    # http://127.0.0.1:5000/api/jokes/2
+
+    conn = sqlite3.connect(sqlite_db_path)
+    curs = conn.cursor()
+
+    # print(joke_id)
+
+    curs.execute(GET_JOKE_BY_JOKE_ID, (joke_id,))
+    query_results = curs.fetchall()
+
+    conn.close()
+
+    listofdicts_query_results = [
+    {
+        "id": item[0],
+        "is_active": item[1],
+        "joke_version_id": item[2],
+        "creation_timestamp": 
+            datetime.
+            fromtimestamp(item[3]).
+            strftime('%Y-%m-%d %H:%M:%S'),
+        "content": item[4],
+    }
+    for item in query_results
+]
+
+    caller_app_jokes = listofdicts_query_results
+
+    # remote app jokes
+    #-----------------
+
+    remote_app_api_url = "https://api.chucknorris.io/jokes/{}".format(joke_id)
+
+    remote_app_response = requests.get(remote_app_api_url)
+    remote_app_response_data = remote_app_response.json()
+
+    remote_app_jokes = remote_app_response_data
+
+    # unite jokes
+    #-----------------
+
+    jokes = {
+        "caller_app_jokes": caller_app_jokes,
+        "remote_app_jokes": remote_app_jokes
+    }
+
+    return jokes
+
 
 class Joke(db.Model):
 
