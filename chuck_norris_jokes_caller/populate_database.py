@@ -24,9 +24,21 @@ with app.app_context():
 
     try:
         joke_1 =  Joke(1)
+        db.session.add(joke_1)
+        db.session.commit()
 
-        #----
+    except SQLAlchemyError as e:
+        print(f"Managed database error: \n{e}\n")
+        db.session.rollback() 
 
+    except Exception as e:
+        print(f"An unexpected error occurred: \n{e}\n")
+
+
+    sleep(1)
+
+
+    try:
         joke_version_1_1_content = """At various times during the making of Star Wars movies, Chuck Norris was considered for the parts of Han Solo, Luke Skywalker, Darth Vader, the Emperor, Chewbacca, Lando and Yoda. In each case he would be wearing his regular clothes and speak in his Texan drawl."""
 
         joke_version_1_1 = JokeVersion(
@@ -35,7 +47,6 @@ with app.app_context():
             content=joke_version_1_1_content
         )
 
-        db.session.add(joke_1)
         db.session.add(joke_version_1_1)
         db.session.commit()
 
@@ -74,9 +85,20 @@ with app.app_context():
 
     try:
         joke_2 =  Joke(2)
+        db.session.add(joke_2)
+        db.session.commit()
 
-        #----
+    except SQLAlchemyError as e:
+        print(f"Managed database error: \n{e}\n")
+        db.session.rollback() 
 
+    except Exception as e:
+        print(f"An unexpected error occurred: \n{e}\n")
+
+
+    sleep(1)
+
+    try:
 
         joke_version_3_2_content = """as a kid Chuck Norris carried out over 11 sucsessful scuicide bombing missions for the u.s. millitary... the most well known was his attack hiroshima"""
 
@@ -86,7 +108,6 @@ with app.app_context():
             content=joke_version_3_2_content
         )
 
-        db.session.add(joke_2)
         db.session.add(joke_version_3_2)
         db.session.commit()
 
@@ -124,8 +145,20 @@ with app.app_context():
 
     try:
         joke_3 =  Joke(3)
+        db.session.add(joke_3)
+        db.session.commit()
 
-        #---
+    except SQLAlchemyError as e:
+        print(f"Managed database error: \n{e}\n")
+        db.session.rollback() 
+
+    except Exception as e:
+        print(f"An unexpected error occurred: \n{e}\n")
+
+
+    sleep(1)
+
+    try:
 
         joke_version_5_3_content = """Many a class 5 Oklahoma tornado were started when Chuck Norris was preparing to lasso a steer."""
 
@@ -135,7 +168,6 @@ with app.app_context():
             content=joke_version_5_3_content
         )
 
-        db.session.add(joke_3)
         db.session.add(joke_version_5_3)
         db.session.commit()
 
