@@ -104,3 +104,25 @@ order by
     jv.creation_timestamp desc
 limit 1
 """
+
+
+SET_JOKE_AS_NOT_ACTIVE = """
+update 
+    joke 
+set 
+    is_active=False 
+where 
+    id= ?
+    and is_active=True
+"""
+
+
+SET_JOKE_AS_ACTIVE = """
+update 
+    joke 
+set 
+    is_active=True 
+where 
+    id= ?
+    and is_active=False
+"""
