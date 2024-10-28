@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS joke_version;
 
 CREATE TABLE joke (
     id INTEGER,
-    active BOOLEAN,
+    is_active BOOLEAN,
     PRIMARY KEY (id)
 );
 
