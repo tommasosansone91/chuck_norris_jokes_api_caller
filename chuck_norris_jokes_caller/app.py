@@ -1,5 +1,6 @@
 import os
 import time
+from datetime import datetime
 
 from flask import Flask
 from flask import render_template
@@ -63,9 +64,25 @@ def get_jokes_by_free_text():
     # print(compiled_query)
 
     curs.execute(compiled_query)
-    caller_app_jokes = curs.fetchall()
+    query_results = curs.fetchall()
 
     conn.close()
+
+    listofdicts_query_results = [
+    {
+        "id": item[0],
+        "is_active": item[1],
+        "joke_version_id": item[2],
+        "creation_timestamp": 
+            datetime.
+            fromtimestamp(item[3]).
+            strftime('%Y-%m-%d %H:%M:%S'),
+        "content": item[4],
+    }
+    for item in query_results
+]
+
+    caller_app_jokes = listofdicts_query_results
 
     # remote app jokes
     #-----------------
