@@ -86,7 +86,7 @@ where
 """
 
 
-GET_LATEST_JOKE_VERSION_FOR_A_JOKE_ID = """
+GET_JOKE_BY_JOKE_ID = """
 select 
         j.id,
         j.is_active,
