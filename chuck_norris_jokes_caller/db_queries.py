@@ -2,7 +2,11 @@
 
 GET_ALL_JOKES_EVEN_PRECEDENT_VERSIONS = """
 select 
-    * 
+    j.id,
+    j.is_active,
+    jv.id as  version_id,
+    jv.creation_timestamp,
+    jv.content
 from 
     joke j
     join joke_version jv on(
@@ -24,7 +28,11 @@ WITH latest_joke_versions AS (
 )
 
 SELECT 
-    *
+    j.id,
+    j.is_active,
+    jv.id as  version_id,
+    jv.creation_timestamp,
+    jv.content
 FROM 
     joke j
     JOIN joke_version jv 
@@ -51,7 +59,11 @@ WITH latest_joke_versions AS (
 ,
 latest_joke_and_versions AS (
     SELECT 
-        *
+        j.id,
+        j.is_active,
+        jv.id as  version_id,
+        jv.creation_timestamp,
+        jv.content
     FROM 
         joke j
         JOIN joke_version jv 
@@ -76,7 +88,11 @@ where
 
 GET_LATEST_JOKE_VERSION_FOR_A_JOKE_ID = """
 select 
-    * 
+        j.id,
+        j.is_active,
+        jv.id as  version_id,
+        jv.creation_timestamp,
+        jv.content
 from 
     joke j
     join joke_version jv on(
