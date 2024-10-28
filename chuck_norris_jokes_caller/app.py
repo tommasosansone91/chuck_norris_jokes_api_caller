@@ -182,18 +182,25 @@ def delete_joke_by_id(joke_id):
 
     if curs.rowcount == 0:
         # No update
+        status_code = 404
+
         response = {
             "success": False,
-            "msg": f"Cannot delete Joke. Joke with id {joke_id} not found or already deleted (TIP: deactivated)."
+            "msg": f"Cannot delete Joke. Joke with id {joke_id} not found or already deleted (TIP: deactivated).",
+            "status_code": status_code
+
         }
-        status_code = 404
+        
     else:
         # success
+        status_code = 200
+
         response = {
             "success": True,
-            "msg": f"Joke with id {joke_id} has been set as not active."
+            "msg": f"Joke with id {joke_id} has been set as not active.",
+            "status_code": status_code
         }
-        status_code = 200
+        
 
     conn.commit()  # here I have to commit the change
     conn.close()
