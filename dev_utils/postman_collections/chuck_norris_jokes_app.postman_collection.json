@@ -1,0 +1,238 @@
+{
+	"info": {
+		"_postman_id": "5bbdfee4-4472-4585-8b02-b91508aba379",
+		"name": "chuck_norris_jokes_app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21643682"
+	},
+	"item": [
+		{
+			"name": "remote_app",
+			"item": [
+				{
+					"name": "retrieve categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.chucknorris.io/jokes/categories",
+							"protocol": "https",
+							"host": [
+								"api",
+								"chucknorris",
+								"io"
+							],
+							"path": [
+								"jokes",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "retrieve random joke from given category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.chucknorris.io/jokes/random?category=animal",
+							"protocol": "https",
+							"host": [
+								"api",
+								"chucknorris",
+								"io"
+							],
+							"path": [
+								"jokes",
+								"random"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "animal"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "retrieve random joke",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.chucknorris.io/jokes/random",
+							"protocol": "https",
+							"host": [
+								"api",
+								"chucknorris",
+								"io"
+							],
+							"path": [
+								"jokes",
+								"random"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "retrieve jokes given free text",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.chucknorris.io/jokes/search?query=cigars",
+							"protocol": "https",
+							"host": [
+								"api",
+								"chucknorris",
+								"io"
+							],
+							"path": [
+								"jokes",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "cigars"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "retrieve jokes given uuid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.chucknorris.io/jokes/wxw3oc-rt6evdeledjufsq",
+							"protocol": "https",
+							"host": [
+								"api",
+								"chucknorris",
+								"io"
+							],
+							"path": [
+								"jokes",
+								"wxw3oc-rt6evdeledjufsq"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "local_app",
+			"item": [
+				{
+					"name": "retrieve BOTH jokes given free text",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/jokes/?query=tornado",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"jokes",
+								""
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "tornado"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "retrieve BOTH jokes given joke_id integer local",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/jokes/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"jokes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "retrieve BOTH jokes given joke_id string uuid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/jokes/wxw3oc-rt6evdeledjufsq",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"jokes",
+								"wxw3oc-rt6evdeledjufsq"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete joke given joke_id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/jokes/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"jokes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
