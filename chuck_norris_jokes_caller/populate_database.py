@@ -150,7 +150,7 @@ with app.app_context():
     sleep(1)
 
     try:
-        joke_version_3_2_content = """ v2 Many a class 5 Oklahoma tornado were started """
+        joke_version_3_2_content = """ v2 Chuck Norris Many a class 5 Oklahoma tornado were started """
 
         joke_version_3_2 = JokeVersion(
             id=6,
