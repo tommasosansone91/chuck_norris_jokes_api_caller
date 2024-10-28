@@ -81,7 +81,7 @@ select
 from 
     latest_joke_and_versions
 where
-    lower(content) like '%{}%'
+    lower(content) like ?
     and is_active = True
 """
 
@@ -99,7 +99,7 @@ from
             j.id = jv.joke_id
             )
 where
-    jv.joke_id = {}
+    jv.joke_id = ?
 order by 
     jv.creation_timestamp desc
 limit 1
