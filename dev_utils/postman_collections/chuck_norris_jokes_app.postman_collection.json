@@ -231,6 +231,40 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "add joke",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"when chuck norris weeps, no, wait, it's the niagara falls\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/jokes/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"jokes",
+								""
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
