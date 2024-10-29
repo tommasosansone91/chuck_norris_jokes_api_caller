@@ -12,5 +12,5 @@ CREATE TABLE joke_version (
     joke_id INTEGER,
     creation_timestamp INTEGER,
     content TEXT,
-    PRIMARY KEY (id, joke_id)
+    PRIMARY KEY (id)
 );
