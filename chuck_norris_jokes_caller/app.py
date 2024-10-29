@@ -36,7 +36,13 @@ Migrate(app,db)
 @app.route("/")
 def index():
     return render_template("index.html")
-    
+
+
+
+###########
+# APIs
+###########
+
 
 @app.route('/helloname/')
 def helloname():
@@ -278,8 +284,19 @@ def add_joke():
         )
 
 
+
+### `PUT /api/jokes/{id}`
+# Endpoint to update a joke by unique id. 
+# If the joke does not exist, return 404 not found. 
+# But if it does, store a updated version locally. 
+# Any subsequent reads should only see this updated version.
+
+
+
+############
 # models
 ############
+
 
 class Joke(db.Model):
 
