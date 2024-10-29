@@ -19,7 +19,14 @@ db = SQLAlchemy(app)
 
 Migrate(app,db)
 
-from api import *
+from api import \
+    index, \
+    helloname, \
+    get_jokes_by_free_text, \
+    get_jokes_by_id, \
+    delete_joke_by_id, \
+    add_joke, \
+    update_joke_by_id
  
 
 if __name__ == "__main__":
