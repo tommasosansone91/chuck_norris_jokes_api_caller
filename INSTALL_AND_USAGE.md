@@ -19,39 +19,41 @@ export the app script path as bash variable
 
     export FLASK_APP=chuck_norris_jokes_caller/app.py
 
-initialize the db migration gear, it will create a folder at path `migrations`.<br>
-You should ignore the error in case a folder `migrations` is already present/versioned in the project.
+Initialize the db migration gear: it will create a folder at path `migrations`.<br>
 
-In case you deleted migrations and you want to init the db anwe:
+> [!TIP]
+> You should ignore the error in case a folder `migrations` is already present/versioned in the project.
 
-    sqlite3 chuck_norris_jokes_caller/chuck_norris_jokes_caller.sqlite
-    
-        delete from alembic_version;  
+> [!NOTE]
+> In case you deleted migrations and you want to init the db again:
+> 
+>     sqlite3 chuck_norris_jokes_caller/chuck_norris_jokes_caller.sqlite
+>     
+>         delete from alembic_version;  
 
-then
+create migration required files
 
-    flask db init  # create migration required files
+    flask db init
 
 save the changes to DB structure
 
-    flask db migrate -m "< migration message here >"
+    flask db migrate -m "< migration message here>"
 
 apply the changes to DB structure
 
     flask db upgrade 
 
 
-every time the DB structure is changed you have to run
+Every time the DB structure is changed, you have to run
 
-    flask db migrate -m "< migration message here >"
+    flask db migrate -m "< migration message here>"
 
-    flask db upgrade  # the same of django's makemigrations
+    flask db upgrade
 
-and eventually
-
-    export FLASK_APP=chuck_norris_jokes_caller/app.py
-
-before them if you started a new bash session.
+> [!NOTE]
+> Every time you open a bash session or terminal and want to operate the migrations, you have to run
+> 
+>     export FLASK_APP=chuck_norris_jokes_caller/app.py
 
 
 ### populate db with test data
