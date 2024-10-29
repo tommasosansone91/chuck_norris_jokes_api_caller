@@ -212,6 +212,72 @@ def delete_joke_by_id(joke_id):
         )
 
 
+@app.route('/api/jokes/', methods=['POST'])
+def add_joke():
+
+    request_body = request.get_json()
+
+    if 'content' not in request_body:
+        response = {
+            "success": False,
+            "message": "The request body does not contain the field 'content'."
+        }
+        return (
+            json.dumps(response), 
+            400, 
+            {'Content-Type': 'application/json'}
+            )
+
+    content = request_body['content']
+
+    try:
+        new_joke = Joke(is_active=True)
+        db.session.add(new_joke)
+
+        # Execute the query but don't do the commit
+        # so I can get and give new_joke.id to the new joke_version object
+        db.session.flush()  
+
+        current_timestamp = datetime.now().timestamp()
+        current_timestamp_in_seconds = int(current_timestamp)
+
+        new_joke_version = JokeVersion(
+            joke_id=new_joke.id,  # match the two objects
+            content=content,
+            creation_timestamp = current_timestamp_in_seconds
+        )
+        db.session.add(new_joke_version)
+
+        db.session.commit()
+
+        response = {
+            "success": True,
+            "message": "A new joke has been successfully created.",
+            "new_joke": {
+                "id": new_joke.id,
+                "is_active": new_joke.is_active,
+                "joke_version_id": new_joke_version.id,
+                "creation_timestamp": current_timestamp,
+                "content": new_joke_version.content
+            }
+        }
+        status_code = 201  # Created
+
+    except Exception as e:
+        db.session.rollback()  # Annulla la transazione in caso di errore
+        response = {
+            "success": False,
+            "message": str(e)
+        }
+        status_code = 500  # Internal Server Error
+
+    return (
+        json.dumps(response), 
+        status_code, 
+        {'Content-Type': 'application/json'}
+        )
+
+
 # models
 ############
 
@@ -244,7 +310,7 @@ class JokeVersion(db.Model):
     id = db.Column(db.Integer, autoincrement=True)
     joke_id = db.Column(db.Integer, nullable=False)
     creation_timestamp = db.Column(db.Integer, nullable=False, default=lambda: int(time.time()))
-    content = db.Column(db.Text, nullable=False)
+    content = db.Column(db.Text, nullable=False, unique=True)
 
     # comosite pk
     __table_args__ = (
