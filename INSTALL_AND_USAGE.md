@@ -1,8 +1,8 @@
-# install and usage
+# Install and usage
 
 Please read this file and follow its instructions to install, setup, run and operate the application.
 
-## install
+## Install
 
     virtualenv venv
 
@@ -10,8 +10,6 @@ Please read this file and follow its instructions to install, setup, run and ope
 
     cat requirements.txt | xargs -n 1 pip install
 
-
-## usage
 
 ### apply migrations
 
@@ -56,7 +54,7 @@ apply the changes to DB structure
 >     export FLASK_APP=chuck_norris_jokes_caller/app.py
 
 
-### populate db with test data
+### Populate the database with test data
 
     python chuck_norris_jokes_caller/populate_database.py
 
@@ -65,7 +63,7 @@ In case you need to manipulate db data via SQL
     sqlite3 chuck_norris_jokes_caller/chuck_norris_jokes_caller.sqlite
 
 
-### run
+### Run the app
 
     flask --app chuck_norris_jokes_caller/app run --debug
 
