@@ -121,18 +121,18 @@ def get_joke_by_id(joke_id):
     conn.close()
 
     listofdicts_query_results = [
-    {
-        "id": item[0],
-        "is_active": item[1],
-        "joke_version_id": item[2],
-        "creation_timestamp": 
-            datetime.
-            fromtimestamp(item[3]).
-            strftime('%Y-%m-%d %H:%M:%S'),
-        "content": item[4],
-    }
-    for item in query_results
-]
+        {
+            "id": item[0],
+            "is_active": item[1],
+            "joke_version_id": item[2],
+            "creation_timestamp": 
+                datetime.
+                fromtimestamp(item[3]).
+                strftime('%Y-%m-%d %H:%M:%S'),
+            "content": item[4],
+        }
+        for item in query_results
+    ]
 
     caller_app_jokes = listofdicts_query_results
 
@@ -279,5 +279,95 @@ def add_joke():
 # But if it does, store a updated version locally. 
 # Any subsequent reads should only see this updated version.
 @app.route('/api/jokes/<int:joke_id>', methods=['PUT'])
-def update_joke_by_id():
-    pass
+def update_joke_by_id(joke_id):
+
+    request_body = request.get_json()
+
+    # check the request requirements
+    #-----------------
+
+    if ('content' not in request_body):
+        response = {
+            "success": False,
+            "message": "The request body does not contain the field 'content'."
+        }
+        return (
+            json.dumps(response), 
+            400, 
+            {'Content-Type': 'application/json'}
+            )
+
+    content = request_body['content']
+
+
+    # check if there is already a joke stored with the given id (only in local app)
+    #-----------------
+
+    # @TODO: 
+    # change the get joke by id with 
+    # a body parameter that allows to specify if you want to retieve the joke 
+    # from remote or local or both apps.
+    # exploit that new api to retrieve the joke here and avoid to write more code
+
+    # http://127.0.0.1:5000/api/jokes/2
+
+    conn = sqlite3.connect(sqlite_db_path)
+    curs = conn.cursor()
+
+    # print(joke_id)
+    # print(content)
+
+    curs.execute(GET_JOKE_BY_JOKE_ID, (joke_id,))
+    query_results = curs.fetchall()
+
+    conn.close()
+
+    listofdicts_query_results = [
+        {
+            "id": item[0],
+            "is_active": item[1],
+            "joke_version_id": item[2],
+            "creation_timestamp": 
+                datetime.
+                fromtimestamp(item[3]).
+                strftime('%Y-%m-%d %H:%M:%S'),
+            "content": item[4],
+        }
+        for item in query_results
+    ]
+
+    caller_app_jokes = listofdicts_query_results
+
+
+    # @TODO: 
+    # define functions that run in case the joke with given id exists or not.
+
+    def call_add_joke_api(content):
+        url = "http://127.0.0.1:5000/api/jokes/"
+        headers = {
+            "Content-Type": "application/json"
+        }
+        body = {
+            "content": content
+        }
+        response = requests.post(url, headers=headers, data=json.dumps(body))
+        return(response)
+
+
+    if len(caller_app_jokes) == 1:
+        # update existing
+
+        # new function
+        pass
+
+    elif len(caller_app_jokes) == 0:
+        # create new one
+
+        # call the add_joke api
+        response = call_add_joke_api(content)
+
+        return( response )
+
+    else:
+        raise ValueError("Code should never get here.")
+
