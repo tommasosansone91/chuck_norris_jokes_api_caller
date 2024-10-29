@@ -103,7 +103,7 @@ def get_jokes_by_free_text():
 # ### `GET /api/jokes/{id}`
 # Endpoint to retrieve a joke by unique id. You should take local and remote results into consideration.
 @app.route('/api/jokes/<string:joke_id>', methods=['GET'])
-def get_jokes_by_id(joke_id):
+def get_joke_by_id(joke_id):
 
     # caller app jokes
     #-----------------

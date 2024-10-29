@@ -23,7 +23,7 @@ from api import \
     index, \
     helloname, \
     get_jokes_by_free_text, \
-    get_jokes_by_id, \
+    get_joke_by_id, \
     delete_joke_by_id, \
     add_joke, \
     update_joke_by_id
