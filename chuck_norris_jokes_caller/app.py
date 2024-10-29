@@ -290,7 +290,9 @@ def add_joke():
 # If the joke does not exist, return 404 not found. 
 # But if it does, store a updated version locally. 
 # Any subsequent reads should only see this updated version.
-
+@app.route('/api/jokes/<int:joke_id>', methods=['PUT'])
+def update_joke_by_id():
+    pass
 
 
 ############
