@@ -231,7 +231,7 @@ def add_joke():
     content = request_body['content']
 
     try:
-        new_joke = Joke(is_active=True)
+        new_joke = Joke()
         db.session.add(new_joke)
 
         # Execute the query but don't do the commit
@@ -307,15 +307,15 @@ class JokeVersion(db.Model):
 
     __tablename__ = 'joke_version'
 
-    id = db.Column(db.Integer, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     joke_id = db.Column(db.Integer, nullable=False)
     creation_timestamp = db.Column(db.Integer, nullable=False, default=lambda: int(time.time()))
     content = db.Column(db.Text, nullable=False, unique=True)
 
-    # comosite pk
-    __table_args__ = (
-        db.PrimaryKeyConstraint('id', 'joke_id'),
-    )
+    # # comosite pk
+    # __table_args__ = (
+    #     db.PrimaryKeyConstraint('id', 'joke_id'),
+    # )
 
     def __init__(self, joke_id, content, id=None, creation_timestamp=None):
         
