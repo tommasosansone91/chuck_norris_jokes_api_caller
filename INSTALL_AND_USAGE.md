@@ -43,12 +43,12 @@ apply the changes to DB structure
 
     flask db upgrade 
 
-
-Every time the DB structure is changed, you have to run
-
-    flask db migrate -m "< migration message here>"
-
-    flask db upgrade
+> [!NOTE]
+> Every time the DB structure is changed, you have to run
+> 
+>     flask db migrate -m "< migration message here>"
+> 
+>     flask db upgrade
 
 > [!NOTE]
 > Every time you open a bash session or terminal and want to operate the migrations, you have to run
