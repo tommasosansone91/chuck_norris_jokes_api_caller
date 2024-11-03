@@ -132,10 +132,28 @@
 			"name": "local_app",
 			"item": [
 				{
-					"name": "retrieve BOTH jokes given free text = tornado",
+					"name": "retrieve local jokes given free text=tornado",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"target_apps\": [\"local\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://127.0.0.1:5000/jokes/?query=tornado",
 							"protocol": "http",
@@ -161,12 +179,30 @@
 					"response": []
 				},
 				{
-					"name": "retrieve BOTH jokes given free text = chuck norris",
+					"name": "retrieve remote jokes given free text=tornado",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"target_apps\": [\"remote\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/jokes/?query=chuck norris",
+							"raw": "http://127.0.0.1:5000/jokes/?query=tornado",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -182,7 +218,7 @@
 							"query": [
 								{
 									"key": "query",
-									"value": "chuck norris"
+									"value": "tornado"
 								}
 							]
 						}
@@ -190,10 +226,75 @@
 					"response": []
 				},
 				{
-					"name": "retrieve BOTH jokes given joke_id integer local",
+					"name": "retrieve BOTH jokes given free text=tornado",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"target_apps\": [\"local\", \"remote\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/jokes/?query=tornado",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"jokes",
+								""
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "tornado"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "retrieve local jokes given joke_id integer",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"target_apps\": [\"local\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://127.0.0.1:5000/api/jokes/2",
 							"protocol": "http",
@@ -214,10 +315,26 @@
 					"response": []
 				},
 				{
-					"name": "retrieve BOTH jokes given joke_id string uuid",
+					"name": "retrieve remote jokes given joke_id string uuid",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"target_apps\": [\"local\", \"remote\"]\n}"
+						},
 						"url": {
 							"raw": "http://127.0.0.1:5000/api/jokes/wxw3oc-rt6evdeledjufsq",
 							"protocol": "http",
@@ -263,6 +380,11 @@
 				},
 				{
 					"name": "add joke",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
 					"request": {
 						"method": "POST",
 						"header": [
@@ -274,7 +396,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"content\": \"when chuck norris weeps, no, wait, it's the niagara falls\"\n}"
+							"raw": "{\n    \"content\": \"sometimes Chuck Norris weeps, no wait it's the niagara falls\"\n}"
 						},
 						"url": {
 							"raw": "http://127.0.0.1:5000/api/jokes/",
@@ -297,6 +419,11 @@
 				},
 				{
 					"name": "update joke",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
 					"request": {
 						"method": "PUT",
 						"header": [
