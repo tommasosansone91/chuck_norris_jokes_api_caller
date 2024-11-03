@@ -249,7 +249,8 @@ def get_joke_by_id(joke_id):
 
 
 ## `DELETE /api/jokes/{id}`
-# Endpoint to delete a joke by unique id. If the joke does not exist, return 404 not found. But if it does, mark the joke locally as deleted. Any subsequent reads should *NOT* see this joke.
+# Endpoint to delete a joke by unique id. If the joke does not exist, return 404 not found. 
+# But if it does, mark the joke locally as deleted. Any subsequent reads should *NOT* see this joke.
 @app.route('/api/jokes/<string:joke_id>', methods=['DELETE'])
 def delete_joke_by_id(joke_id):
 
@@ -328,7 +329,7 @@ def add_joke():
 
         current_timestamp = datetime.now().timestamp()
         current_timestamp_in_seconds = int(current_timestamp)  # otherwis it will get also milliseconds
-        
+
         readable_current_timestamp = datetime.fromtimestamp(current_timestamp).strftime('%Y-%m-%d %H:%M:%S')
 
         new_joke_version = JokeVersion(
@@ -409,10 +410,10 @@ def update_joke_by_id(joke_id):
 
     content = request_body['content']
 
-    print("content")
-    print(content)
-    print("joke_id")
-    print(joke_id)
+    # print("content")
+    # print(content)
+    # print("joke_id")
+    # print(joke_id)
 
 
     # check if there is already a joke stored with the given id (only in local app)
@@ -469,8 +470,8 @@ def update_joke_by_id(joke_id):
 
         jsondumpsed_body = json.dumps(body)
 
-        print("jsondumpsed_body")
-        print(jsondumpsed_body)
+        # print("jsondumpsed_body")
+        # print(jsondumpsed_body)
 
         response = requests.post(
             url, 
@@ -478,10 +479,15 @@ def update_joke_by_id(joke_id):
             data=jsondumpsed_body
             )
         
-        print("response")
-        print(response)
+        # print("response")
+        # print(response)
 
         return(response)
+
+
+    def call_delete_joke_api(content):
+        pass
+
 
 
     if len(caller_app_jokes) == 1:
@@ -490,40 +496,75 @@ def update_joke_by_id(joke_id):
         print("update existing joke")
 
         # new function
+        retrieved_joke = caller_app_jokes[0]
+
+        # retrieved_joke.
+
+
+
+        # response_dict = {
+        #     "success": True ,
+        #     "message": "Joke with joke_id = {} has been successfully updated".format(joke_id),
+        #     "status_code": status_code,
+        #     "updated_joke_data": pythonified_response
+        # }
+
         pass
 
     elif len(caller_app_jokes) == 0:
-        # create new one
 
-        print("create new joke")
+        # print("return error")
 
-        # call the add_joke api
-        response = call_add_joke_api(content)
+        status_code = 404
 
-        pythonified_response = response.json()
-        # status_code = response.status_code
+        response_dict = {
+            "success": False ,
+            "message": "There is no existing joke with joke_id = {}".format(joke_id),
+            "status_code": status_code,
+            "updated_joke_data": None
+        }
 
-        if response.ok:
-            # Return the JSON from the response if it is successful
-            return (
-                json.dumps(pythonified_response), 
-                response.status_code, 
-                {'Content-Type': 'application/json'}
-                )
+        return (
+            json.dumps(response_dict), 
+            status_code, 
+            {'Content-Type': 'application/json'}
+            )
+
+        # print("create new joke")
+
+        # # call the add_joke api
+        # response = call_add_joke_api(content)
+
+        # # turning the response object to a dictionary
+        # pythonified_response = response.json()
+        # # status_code = response.status_code
+
+        # new_response_dict = {
+        #     "action": "insert" ,
+        #     "updated_joke_data": pythonified_response
+        # }
+
+        # if response.ok:
+        #     # Return the JSON from the response if it is successful
+        #     return (
+        #         json.dumps(new_response_dict), 
+        #         response.status_code, 
+        #         {'Content-Type': 'application/json'}
+        #         )
         
-        else:
-            # Handle the case where adding the joke failed
+        # else:
+        #     # Handle the case where adding the joke failed
 
-            error_response = {
-                "success": False, 
-                "message": "Failed to create joke."
-                }
+        #     error_response = {
+        #         "success": False, 
+        #         "message": "Failed to create new joke."
+        #         }
 
-            return (
-                json.dumps(error_response), 
-                response.status_code, 
-                {'Content-Type': 'application/json'}
-                )
+        #     return (
+        #         json.dumps(error_response), 
+        #         response.status_code, 
+        #         {'Content-Type': 'application/json'}
+        #         )
 
 
 
