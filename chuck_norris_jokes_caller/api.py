@@ -269,6 +269,9 @@ def delete_joke_by_id(joke_id):
         # No update
         status_code = 404
 
+        #@TODO 
+        # display in response the joke that has been cancelled
+
         response = {
             "success": False,
             "msg": f"Cannot delete Joke. Joke with id {joke_id} not found or already deleted (TIP: deactivated).",
@@ -390,10 +393,12 @@ def update_joke_by_id(joke_id):
     #-----------------
 
     if ('content' not in request_body):
+
         response = {
             "success": False,
             "message": "The request body does not contain the field 'content'."
         }
+
         return (
             json.dumps(response), 
             400, 
@@ -401,6 +406,11 @@ def update_joke_by_id(joke_id):
             )
 
     content = request_body['content']
+
+    print("content")
+    print(content)
+    print("joke_id")
+    print(joke_id)
 
 
     # check if there is already a joke stored with the given id (only in local app)
@@ -446,6 +456,7 @@ def update_joke_by_id(joke_id):
     # define functions that run in case the joke with given id exists or not.
 
     def call_add_joke_api(content):
+
         url = "http://127.0.0.1:5000/api/jokes/"
         headers = {
             "Content-Type": "application/json"
@@ -453,12 +464,28 @@ def update_joke_by_id(joke_id):
         body = {
             "content": content
         }
-        response = requests.post(url, headers=headers, data=json.dumps(body))
+
+        jsondumpsed_body = json.dumps(body)
+
+        print("jsondumpsed_body")
+        print(jsondumpsed_body)
+
+        response = requests.post(
+            url, 
+            headers=headers, 
+            data=jsondumpsed_body
+            )
+        
+        print("response")
+        print(response)
+
         return(response)
 
 
     if len(caller_app_jokes) == 1:
         # update existing
+
+        print("update existing joke")
 
         # new function
         pass
@@ -466,10 +493,37 @@ def update_joke_by_id(joke_id):
     elif len(caller_app_jokes) == 0:
         # create new one
 
+        print("create new joke")
+
         # call the add_joke api
         response = call_add_joke_api(content)
 
-        return( response )
+        pythonified_response = response.json()
+        # status_code = response.status_code
+
+        if response.ok:
+            # Return the JSON from the response if it is successful
+            return (
+                json.dumps(pythonified_response), 
+                response.status_code, 
+                {'Content-Type': 'application/json'}
+                )
+        
+        else:
+            # Handle the case where adding the joke failed
+
+            error_response = {
+                "success": False, 
+                "message": "Failed to create joke."
+                }
+
+            return (
+                json.dumps(error_response), 
+                response.status_code, 
+                {'Content-Type': 'application/json'}
+                )
+
+
 
     else:
         raise ValueError("Code should never get here.")
