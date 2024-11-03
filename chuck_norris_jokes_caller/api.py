@@ -11,15 +11,19 @@ from app import app
 from app import db
 from app import sqlite_db_path
 
+# import queries
 from db_queries import \
     GET_JOKES_BY_FREE_TEXT, \
     GET_JOKE_BY_JOKE_ID, \
     SET_JOKE_AS_NOT_ACTIVE
 
+# import models
 from models import \
     Joke, \
     JokeVersion
 
+
+from sqlalchemy.exc import IntegrityError
 
 
 ###########
@@ -257,12 +261,24 @@ def add_joke():
         }
         status_code = 201  # Created
 
+    except IntegrityError as e:
+        # Gestisci l'IntegrityError specifico
+        response = {
+            "success": False,
+            "error_type": "IntegrityError",
+            "message": "The operation violated a database integrity constraint.",
+            "details": str(e)
+        }
+
+        status_code = 500  # Internal Server Error
+
     except Exception as e:
         db.session.rollback()  # Annulla la transazione in caso di errore
         response = {
             "success": False,
             "message": str(e)
         }
+
         status_code = 500  # Internal Server Error
 
     return (
