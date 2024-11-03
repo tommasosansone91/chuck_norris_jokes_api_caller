@@ -327,7 +327,9 @@ def add_joke():
         db.session.flush()  
 
         current_timestamp = datetime.now().timestamp()
-        current_timestamp_in_seconds = int(current_timestamp)
+        current_timestamp_in_seconds = int(current_timestamp)  # otherwis it will get also milliseconds
+        
+        readable_current_timestamp = datetime.fromtimestamp(current_timestamp).strftime('%Y-%m-%d %H:%M:%S')
 
         new_joke_version = JokeVersion(
             joke_id=new_joke.id,  # match the two objects
@@ -345,8 +347,8 @@ def add_joke():
                 "id": new_joke.id,
                 "is_active": new_joke.is_active,
                 "joke_version_id": new_joke_version.id,
-                "creation_timestamp": current_timestamp,
-                "content": new_joke_version.content
+                # "creation_timestamp": current_timestamp,
+                "creation_timestamp": readable_current_timestamp,
             }
         }
         status_code = 201  # Created
