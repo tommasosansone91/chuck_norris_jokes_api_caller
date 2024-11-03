@@ -65,6 +65,12 @@ In case you need to manipulate db data via SQL
 
 ### Run the app
 
+activate the virtual environment
+
+    source venv/bin/activate
+
+run the server 
+
     flask --app chuck_norris_jokes_caller/app run --debug
 
 >[!WARNING]
