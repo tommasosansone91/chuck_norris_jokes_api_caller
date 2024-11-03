@@ -126,3 +126,7 @@ where
     id= ?
     and is_active=False
 """
+
+
+UPDATE_JOKE_VERSION_BY_JOKE_ID = """
+"""
