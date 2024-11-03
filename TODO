@@ -4,3 +4,21 @@
 - Add extra options/attributes to endpoints to make them more powerful
 - Add a Dockerfile to make your assignment deployable.
 - Add a travis/gitlab/... CI/CD configuration steps.
+
+
+# my TODO
+
+- add error ocdes for response api: mapping the errors.
+
+- they will run test scenarios based on the api I was told to build
+
+- delete must delete the verison of joke
+- is active must be changed to model joke_version
+- the querues must be changed
+
+- the update api must use the get api by id to get the joke
+if it does not mtch it, returns error. -> done
+it if matches it, 
+first it must flag it as deleted, not active (the verison!)
+then it must publish a new version of it (active) ---> create a new joke
+keep the joke model as it is the only way to keep the history of "versions of the jokes"
