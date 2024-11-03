@@ -48,58 +48,103 @@ def helloname():
 @app.route('/jokes/')
 def get_jokes_by_free_text():
 
+
+    # ascertain which are the target apps you want to launch the query on
+    #----------------
+
+    request_body = request.get_json()
+
+    target_apps = request_body.get('target_apps', [])
+
+    # @TODO turn the check to function as external file util
+    valid_targets = {'local', 'remote'}
+
+    target_apps_set = set(target_apps)
+
+    # Check for valid target_apps values
+    if \
+        not target_apps \
+        or \
+        not target_apps_set.issubset(valid_targets):
+
+        # issubset(valid_targets): 
+        # restituisce True se tutti gli elementi di target_apps_set sono presenti in valid_targets.
+
+        error_response = {
+            "success": False,
+            "message": "The 'target_apps' field must contain a list with 'local', 'remote', or both."
+        }
+
+        status_code = 400
+
+        return (
+            json.dumps(error_response), 
+            status_code, 
+            {'Content-Type': 'application/json'}
+            )
+    
+    jokes = dict()
+
+    free_text = request.args.get('query', 'NO_TEXT')
+    
     # caller app jokes
     #-----------------
 
-    # http://127.0.0.1:5000/jokes/?query=cigars
+    # Fetch jokes locally if 'local' is in target_apps
+    if 'local' in target_apps:
 
-    free_text = request.args.get('query', 'NO_TEXT')
+        # http://127.0.0.1:5000/jokes/?query=cigars
 
-    free_text_lowered_and_wrapped_with_jollychars = f"%{free_text.lower()}%"
 
-    conn = sqlite3.connect(sqlite_db_path)
-    curs = conn.cursor()
 
-    # print(free_text)
+        free_text_lowered_and_wrapped_with_jollychars = f"%{free_text.lower()}%"
 
-    curs.execute(GET_JOKES_BY_FREE_TEXT, (free_text_lowered_and_wrapped_with_jollychars,))
-    query_results = curs.fetchall()
+        conn = sqlite3.connect(sqlite_db_path)
+        curs = conn.cursor()
 
-    conn.close()
+        # print(free_text)
 
-    listofdicts_query_results = [
-    {
-        "id": item[0],
-        "is_active": item[1],
-        "joke_version_id": item[2],
-        "creation_timestamp": 
-            datetime.
-            fromtimestamp(item[3]).
-            strftime('%Y-%m-%d %H:%M:%S'),
-        "content": item[4],
-    }
-    for item in query_results
-]
+        curs.execute(GET_JOKES_BY_FREE_TEXT, (free_text_lowered_and_wrapped_with_jollychars,))
+        query_results = curs.fetchall()
 
-    caller_app_jokes = listofdicts_query_results
+        conn.close()
+
+        # @TODO to be turned to function
+        listofdicts_query_results = [
+        {
+            "id": item[0],
+            "is_active": item[1],
+            "joke_version_id": item[2],
+            "creation_timestamp": 
+                datetime.
+                fromtimestamp(item[3]).
+                strftime('%Y-%m-%d %H:%M:%S'),
+            "content": item[4],
+        }
+        for item in query_results
+        ]
+
+        caller_app_jokes = listofdicts_query_results
+
+        jokes["local_app_jokes"] = caller_app_jokes
 
     # remote app jokes
     #-----------------
 
-    remote_app_api_url = "https://api.chucknorris.io/jokes/search?query={}".format(free_text)
+    # Fetch jokes remotely if 'remote' is in target_apps
+    if 'remote' in target_apps:
 
-    remote_app_response = requests.get(remote_app_api_url)
-    remote_app_response_data = remote_app_response.json()
+        remote_app_api_url = "https://api.chucknorris.io/jokes/search?query={}".format(free_text)
 
-    remote_app_jokes = remote_app_response_data
+        remote_app_response = requests.get(remote_app_api_url)
+        remote_app_response_data = remote_app_response.json()
+
+        remote_app_jokes = remote_app_response_data
+
+        jokes["remote_app_jokes"] = remote_app_jokes
 
     # unite jokes
     #-----------------
-
-    jokes = {
-        "caller_app_jokes": caller_app_jokes,
-        "remote_app_jokes": remote_app_jokes
-    }
 
     return jokes
     
