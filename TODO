@@ -1,0 +1,6 @@
+# TODO
+
+- Add documentation
+- Add extra options/attributes to endpoints to make them more powerful
+- Add a Dockerfile to make your assignment deployable.
+- Add a travis/gitlab/... CI/CD configuration steps.
