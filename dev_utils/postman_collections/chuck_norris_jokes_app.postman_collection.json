@@ -132,7 +132,7 @@
 			"name": "local_app",
 			"item": [
 				{
-					"name": "retrieve BOTH jokes given free text",
+					"name": "retrieve BOTH jokes given free text = tornado",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -154,6 +154,35 @@
 								{
 									"key": "query",
 									"value": "tornado"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "retrieve BOTH jokes given free text = chuck norris",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/jokes/?query=chuck norris",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"jokes",
+								""
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "chuck norris"
 								}
 							]
 						}
@@ -236,6 +265,40 @@
 					"name": "add joke",
 					"request": {
 						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"when chuck norris weeps, no, wait, it's the niagara falls\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/jokes/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"jokes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update joke",
+					"request": {
+						"method": "PUT",
 						"header": [
 							{
 								"key": "Content-Type",
