@@ -1,6 +1,6 @@
 from app import db
 
-from app import \
+from models import \
     Joke, \
     JokeVersion
 
