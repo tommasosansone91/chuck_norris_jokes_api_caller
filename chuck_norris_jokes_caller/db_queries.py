@@ -128,5 +128,6 @@ where
 """
 
 
-UPDATE_JOKE_VERSION_BY_JOKE_ID = """
-"""
+# INSERT_JOKE_VERSION = """
+# """
+# No. Exploit the model gear to autoincrement the id
