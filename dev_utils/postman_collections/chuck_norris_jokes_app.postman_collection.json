@@ -443,7 +443,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"content\": \"sometimes Chuck Norris weeps, no wait it's the niagara falls\"\n}"
+							"raw": "{\n    \"content\": \"swhen chuck norris get hop on his horse... well it's the horse hoppin on chuck norris\"\n}"
 						},
 						"url": {
 							"raw": "http://127.0.0.1:5000/api/jokes/",
@@ -465,46 +465,7 @@
 					"response": []
 				},
 				{
-					"name": "update joke new one",
-					"protocolProfileBehavior": {
-						"disabledSystemHeaders": {
-							"content-type": true
-						}
-					},
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"content\": \"when chuck norris weeps, no, wait, it's the niagara falls\"\n}"
-						},
-						"url": {
-							"raw": "http://127.0.0.1:5000/api/jokes/10",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"jokes",
-								"10"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "test post called",
+					"name": "add joke 2",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -537,6 +498,45 @@
 					"response": []
 				},
 				{
+					"name": "update joke get error",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"chuck norris eat pop-corns... booom!!\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/jokes/13",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"jokes",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "update joke",
 					"protocolProfileBehavior": {
 						"disabledSystemHeaders": {
@@ -554,10 +554,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"content\": \"when chuck norris weeps, no, wait, it's the niagara falls\"\n}"
+							"raw": "{\n    \"content\": \"whenever Chuck Norris swept the floor, a tornado comes up!\"\n}"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/api/jokes/",
+							"raw": "http://127.0.0.1:5000/api/jokes/3",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -569,7 +569,88 @@
 							"path": [
 								"api",
 								"jokes",
-								""
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "retrieve -the just updated- joke given joke_id integer",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"target_apps\": [\"local\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/jokes/4",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"jokes",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update -just created- joke",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"When chuck norris get hop on his horse... well it's the horse that hops on chuck norris!! xD\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/api/jokes/4",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"jokes",
+								"4"
 							]
 						}
 					},
