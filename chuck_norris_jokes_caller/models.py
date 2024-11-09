@@ -39,7 +39,7 @@ class JokeVersion(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     joke_id = db.Column(db.Integer, nullable=False)
     creation_timestamp = db.Column(db.Integer, nullable=False, default=lambda: int(time.time()))
-    content = db.Column(db.Text, nullable=False, unique=True)
+    content = db.Column(db.Text, nullable=False, unique=False)
 
     # # comosite pk
     # __table_args__ = (
