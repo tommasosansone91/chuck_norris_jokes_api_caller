@@ -15,6 +15,8 @@ Please read this file and follow its instructions to install, setup, run and ope
 
     cat requirements.txt | xargs -n 1 pip install
 
+> [!WARNING]
+> Do not change the project name after the virtual environment was created, otherwise the environment will not be recognized and will have to be deleted and regenerated.
 
 ### apply migrations
 
