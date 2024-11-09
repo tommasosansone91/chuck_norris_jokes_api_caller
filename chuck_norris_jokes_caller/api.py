@@ -350,6 +350,7 @@ def add_joke():
                 "joke_version_id": new_joke_version.id,
                 # "creation_timestamp": current_timestamp,
                 "creation_timestamp": readable_current_timestamp,
+                "content": content
             }
         }
         status_code = 201  # Created
@@ -395,7 +396,7 @@ def update_joke_by_id(joke_id):
     # check the request requirements
     #-----------------
 
-    if ('content' not in request_body):
+    if 'content' not in request_body:
 
         response = {
             "success": False,
@@ -456,33 +457,6 @@ def update_joke_by_id(joke_id):
         return(response)
     
 
-    def call_add_joke_api(content):
-
-        url = "http://127.0.0.1:5000/api/jokes/"
-        headers = {
-            "Content-Type": "application/json"
-        }
-        body = {
-            "content": content
-        }
-
-        jsondumpsed_body = json.dumps(body)
-
-        # print("jsondumpsed_body")
-        # print(jsondumpsed_body)
-
-        response = requests.post(
-            url, 
-            headers=headers, 
-            data=jsondumpsed_body
-            )
-        
-        # print("response")
-        # print(response)
-
-        return(response)
-
-
     get_joke_by_id_api_response = call_get_joke_by_id_api(joke_id)
 
     # print("get_joke_by_id_api_response")
@@ -500,12 +474,89 @@ def update_joke_by_id(joke_id):
     if len(caller_app_jokes) == 1:
         # update existing
 
-        print("update existing joke")
-
-        # new function
         retrieved_joke = caller_app_jokes[0]
 
-        # retrieved_joke.
+        print("one joke found: update retrieved joke")
+        print(retrieved_joke)
+
+
+        if retrieved_joke.get('content', None) == content:
+
+            response = {
+                "success": False,
+                "message": "The content of the joke is already the one given in input for update.",
+            }
+
+            status_code = 400  # Internal Server Error
+
+            return (
+                json.dumps(response),  # serialize the response to json
+                status_code, 
+                {'Content-Type': 'application/json'}
+                )
+        
+
+        # new function
+
+        current_timestamp = datetime.now().timestamp()
+        current_timestamp_in_seconds = int(current_timestamp)  # otherwise it will get also milliseconds
+
+        readable_current_timestamp = datetime.fromtimestamp(current_timestamp).strftime('%Y-%m-%d %H:%M:%S')
+
+        
+
+        try:
+
+            new_joke_version = JokeVersion(
+                joke_id=joke_id,
+                content=content,
+                creation_timestamp = current_timestamp_in_seconds
+            )
+
+            db.session.add(new_joke_version)
+            db.session.commit()
+
+            status_code = 201  # Created
+
+            response = {
+                "success": True,
+                "message": "Joke with joke_id = {} has been successfully updated".format(joke_id),
+                "status_code": status_code,
+                "updated_joke_data": {
+                    "id": joke_id,
+                    "joke_version_id": new_joke_version.id,
+                    "creation_timestamp": readable_current_timestamp,
+                    "content": content
+                }
+            }
+            
+
+        except IntegrityError as e:
+            # Gestisci l'IntegrityError specifico
+            response = {
+                "success": False,
+                "error_type": "IntegrityError",
+                "message": "The operation violated a database integrity constraint.",
+                "details": str(e)
+            }
+
+            status_code = 500  # Internal Server Error
+
+        except Exception as e:
+            db.session.rollback()  # Annulla la transazione in caso di errore
+            response = {
+                "success": False,
+                "message": str(e)
+            }
+
+            status_code = 500  # Internal Server Error
+
+        return (
+            json.dumps(response),  # serialize the response to json
+            status_code, 
+            {'Content-Type': 'application/json'}
+            )
+
 
 
 
@@ -516,12 +567,10 @@ def update_joke_by_id(joke_id):
         #     "updated_joke_data": pythonified_response
         # }
 
-        pass
-    
 
     elif len(caller_app_jokes) == 0:
 
-        # print("return error")
+        # print("no joke found: return error")
 
         status_code = 404
 
