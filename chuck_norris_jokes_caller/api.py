@@ -78,7 +78,7 @@ def get_jokes_by_free_text():
         status_code = 400
 
         return (
-            json.dumps(error_response), 
+            json.dumps(error_response),  # serialize the response to json
             status_code, 
             {'Content-Type': 'application/json'}
             )
@@ -137,9 +137,9 @@ def get_jokes_by_free_text():
         remote_app_api_url = "https://api.chucknorris.io/jokes/search?query={}".format(free_text)
 
         remote_app_response = requests.get(remote_app_api_url)
-        remote_app_response_data = remote_app_response.json()
+        remote_app_response_deserialized = remote_app_response.json()  # deserialize the response
 
-        remote_app_jokes = remote_app_response_data
+        remote_app_jokes = remote_app_response_deserialized
 
         jokes["remote_app_jokes"] = remote_app_jokes
 
@@ -182,7 +182,7 @@ def get_joke_by_id(joke_id):
         status_code = 400
 
         return (
-            json.dumps(error_response), 
+            json.dumps(error_response),  # serialize the response to json
             status_code, 
             {'Content-Type': 'application/json'}
             )
@@ -234,9 +234,9 @@ def get_joke_by_id(joke_id):
         remote_app_api_url = "https://api.chucknorris.io/jokes/{}".format(joke_id)
 
         remote_app_response = requests.get(remote_app_api_url)
-        remote_app_response_data = remote_app_response.json()
+        remote_app_response_deserialized = remote_app_response.json()  # deserialize the response
 
-        remote_app_jokes = remote_app_response_data
+        remote_app_jokes = remote_app_response_deserialized
 
         jokes["remote_app_jokes"] = remote_app_jokes
 
@@ -312,7 +312,7 @@ def add_joke():
             "message": "The request body does not contain the field 'content'."
         }
         return (
-            json.dumps(response), 
+            json.dumps(response),  # serialize the response to json
             400, 
             {'Content-Type': 'application/json'}
             )
@@ -375,7 +375,7 @@ def add_joke():
         status_code = 500  # Internal Server Error
 
     return (
-        json.dumps(response), 
+        json.dumps(response),  # serialize the response to json
         status_code, 
         {'Content-Type': 'application/json'}
         )
@@ -403,7 +403,7 @@ def update_joke_by_id(joke_id):
         }
 
         return (
-            json.dumps(response), 
+            json.dumps(response),  # serialize the response to json
             400, 
             {'Content-Type': 'application/json'}
             )
@@ -419,44 +419,42 @@ def update_joke_by_id(joke_id):
     # check if there is already a joke stored with the given id (only in local app)
     #-----------------
 
-    # @TODO: 
-    # change the get joke by id with 
-    # a body parameter that allows to specify if you want to retieve the joke 
-    # from remote or local or both apps.
-    # exploit that new api to retrieve the joke here and avoid to write more code
 
-    # http://127.0.0.1:5000/api/jokes/2
-
-    conn = sqlite3.connect(sqlite_db_path)
-    curs = conn.cursor()
-
-    # print(joke_id)
-    # print(content)
-
-    curs.execute(GET_JOKE_BY_JOKE_ID, (joke_id,))
-    query_results = curs.fetchall()
-
-    conn.close()
-
-    listofdicts_query_results = [
-        {
-            "id": item[0],
-            "is_active": item[1],
-            "joke_version_id": item[2],
-            "creation_timestamp": 
-                datetime.
-                fromtimestamp(item[3]).
-                strftime('%Y-%m-%d %H:%M:%S'),
-            "content": item[4],
-        }
-        for item in query_results
-    ]
-
-    caller_app_jokes = listofdicts_query_results
+    # get joke by id has a body parameter that allows to specify 
+    # if you want to retieve the joke  from remote or local or both apps.
+    # exploit that api to retrieve the joke from local here and avoid to write more code
 
 
     # @TODO: 
     # define functions that run in case the joke with given id exists or not.
+
+
+    def call_get_joke_by_id_api(joke_id):
+
+        url = "http://127.0.0.1:5000/api/jokes/{}".format(joke_id)
+        headers = {
+            "Content-Type": "application/json"
+        }
+        body = {
+            "target_apps": ["local"]
+        }
+
+        jsondumpsed_body = json.dumps(body)
+
+        # print("jsondumpsed_body")
+        # print(jsondumpsed_body)
+
+        response = requests.get(
+            url, 
+            headers=headers, 
+            data=jsondumpsed_body  # for GET requests,the body is given to "params".
+            )
+        
+        # print("response")
+        # print(response)
+
+        return(response)
+    
 
     def call_add_joke_api(content):
 
@@ -476,7 +474,7 @@ def update_joke_by_id(joke_id):
         response = requests.post(
             url, 
             headers=headers, 
-            data=jsondumpsed_body
+            data=jsondumpsed_body   # for POST requests,the body is given to "data".
             )
         
         # print("response")
@@ -485,9 +483,18 @@ def update_joke_by_id(joke_id):
         return(response)
 
 
-    def call_delete_joke_api(content):
-        pass
+    get_joke_by_id_api_response = call_get_joke_by_id_api(joke_id)
 
+    # print("get_joke_by_id_api_response")
+    # print(get_joke_by_id_api_response)
+
+
+    get_joke_by_id_api_response_deserialized = get_joke_by_id_api_response.json()
+
+    # print("get_joke_by_id_api_response_deserialized")
+    # print(get_joke_by_id_api_response_deserialized)
+
+    caller_app_jokes = get_joke_by_id_api_response_deserialized['local_app_jokes']
 
 
     if len(caller_app_jokes) == 1:
@@ -510,6 +517,7 @@ def update_joke_by_id(joke_id):
         # }
 
         pass
+    
 
     elif len(caller_app_jokes) == 0:
 
@@ -529,43 +537,6 @@ def update_joke_by_id(joke_id):
             status_code, 
             {'Content-Type': 'application/json'}
             )
-
-        # print("create new joke")
-
-        # # call the add_joke api
-        # response = call_add_joke_api(content)
-
-        # # turning the response object to a dictionary
-        # pythonified_response = response.json()
-        # # status_code = response.status_code
-
-        # new_response_dict = {
-        #     "action": "insert" ,
-        #     "updated_joke_data": pythonified_response
-        # }
-
-        # if response.ok:
-        #     # Return the JSON from the response if it is successful
-        #     return (
-        #         json.dumps(new_response_dict), 
-        #         response.status_code, 
-        #         {'Content-Type': 'application/json'}
-        #         )
-        
-        # else:
-        #     # Handle the case where adding the joke failed
-
-        #     error_response = {
-        #         "success": False, 
-        #         "message": "Failed to create new joke."
-        #         }
-
-        #     return (
-        #         json.dumps(error_response), 
-        #         response.status_code, 
-        #         {'Content-Type': 'application/json'}
-        #         )
-
 
 
     else:
