@@ -1,4 +1,4 @@
-# Chuck Norris API jokes caller
+# Chuck Norris jokes API caller
 
 ## What is this
 
