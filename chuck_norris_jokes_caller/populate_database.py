@@ -10,10 +10,20 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from time import sleep
 
+DROP_TABLES_MODE = False
+
 
 print(" ")
 
 with app.app_context(): 
+
+    if DROP_TABLES_MODE:
+
+        db.drop_all() 
+
+        # Joke.__table__.drop(db.engine)
+        # JokeVersion.__table__.drop(db.engine)
+
         
     db.create_all()
     # create all tables defined via models, uding db variable
