@@ -447,7 +447,7 @@ def update_joke_by_id(joke_id):
         response = requests.get(
             url, 
             headers=headers, 
-            data=jsondumpsed_body  # for GET requests,the body is given to "params".
+            data=jsondumpsed_body
             )
         
         # print("response")
@@ -474,7 +474,7 @@ def update_joke_by_id(joke_id):
         response = requests.post(
             url, 
             headers=headers, 
-            data=jsondumpsed_body   # for POST requests,the body is given to "data".
+            data=jsondumpsed_body
             )
         
         # print("response")
