@@ -7,7 +7,7 @@ a minimalistic flask API application that would let the user search, create, del
 Please read this file and follow its instructions to install, setup, run and operate the application.
 
 
-![Chuck Norris Jokes app cover](/static/img/chuck_norris_jokes_cover_v2.png?raw=true "Chuck Norris Jokes app cover")
+![Chuck Norris Jokes app cover](/static/img/chuck_norris_jokes_app_cover_v2.png?raw=true "Chuck Norris Jokes app cover")
 
 
 ## Install
