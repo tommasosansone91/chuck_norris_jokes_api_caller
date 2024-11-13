@@ -2,7 +2,7 @@
 
 ## What is this
 
-a minimalistic flask API application that would let the user search, create, delete and update jokes from [Chuck Norris jokes](https://api.chucknorris.io/), that works through for example Postman. To simplify the description, we will call [Chuck Norris jokes](https://api.chucknorris.io/) as remote and application implemented in this assignment as local.
+A minimalistic flask API application that let the user search, create, delete and update jokes from [Chuck Norris jokes](https://api.chucknorris.io/), that works through for example Postman. To simplify the description, we will call [Chuck Norris jokes](https://api.chucknorris.io/) as remote and application implemented in this assignment as local.
 
 Please read this file and follow its instructions to install, setup, run and operate the application.
 
