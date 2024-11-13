@@ -7,6 +7,8 @@ a minimalistic flask API application that would let the user search, create, del
 Please read this file and follow its instructions to install, setup, run and operate the application.
 
 
+![Chuck Norris Jokes app cover](/statics/img/chuck_norris_jokes_cover.png?raw=true "Optional Title")
+
 ## Install
 
     virtualenv venv
