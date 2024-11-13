@@ -51,7 +51,7 @@ apply the changes to DB structure
 
     flask db upgrade 
 
-> [!NOTE]
+> [!IMPORTANT]
 > Every time the DB structure is changed, you have to run
 > 
 >     flask db migrate -m "< migration message here>"
